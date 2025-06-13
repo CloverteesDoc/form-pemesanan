@@ -1,0 +1,93 @@
+body {
+  font-family: Roboto, sans-serif;
+  background-color: #bcdeff;
+  margin: 0;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+form {
+  background-color: rgb(255, 255, 255);
+  padding: 30px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 800px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  overflow-x: auto;
+}
+
+h2 {
+  text-align: center;
+  color: #202124;
+}
+
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: 500;
+  color: #202124;
+}
+
+input, textarea, select, button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #dadce0;
+  border-radius: 5px;
+  font-size: 1em;
+  box-sizing: border-box;
+}
+
+textarea {
+  resize: vertical;
+}
+
+button {
+  background-color: #1a73e8;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.warna-section {
+  margin-top: 30px;
+  padding: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  background: #f8f9fa;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+th, td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: center;
+}
+
+.total-section {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #e8f0fe;
+  border-radius: 5px;
+  font-weight: bold;
+  color: #1a237e;
+  white-space: pre-line;
+}
+
+.note {
+  background-color: #fff8e1;
+  padding: 15px;
+  margin-top: 20px;
+  border-left: 6px solid #f9a825;
+  border-radius: 5px;
+  font-size: 14px;
+  color: #5d4037;
+  white-space: pre-line;
+}
