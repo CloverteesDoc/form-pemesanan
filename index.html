@@ -1,0 +1,51 @@
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Form Pemesanan Clovertees</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <form id="formPemesanan">
+    <h2>Form Pemesanan Clovertees</h2>
+
+    <label>Nama:</label>
+    <input type="text" name="nama" required>
+
+    <label>No Telp / WA:</label>
+    <input type="text" name="telepon" required>
+
+    <label>Instagram:</label>
+    <input type="text" name="instagram" required>
+
+    <label>Alamat:</label>
+    <textarea name="alamat" required></textarea>
+
+    <div id="warnaContainer"></div>
+
+    <button type="button" onclick="tambahWarna()">Tambah Warna</button>
+
+    <div class="total-section" id="totalDisplay">Total Semua:</div>
+
+    <div class="note">
+Mohon diperhatikan!
+Setelah melengkapi data di form pemesanan, warna dan size tidak dapat diganti lagi.
+
+Berikut ini syarat & ketentuan untuk belanja di Clovertees:
+* Mohon konfirmasi apabila sudah tranfer
+* Desain akan diproses sesuai antrian
+  (Yang transfer duluan diproses duluan)
+* Proses pembuatan +/- 4 s/d 7 hari setelah approve desain
+  NB: tergantung pada qty pesanan (apabila size dan warna baju ready)
+* Untuk warna baju dress, tshirt kids dan dewasa sedikit berbeda, dikarenakan:
+  (Kids dan dress bahan cotton combed 24s dan dewasa cotton combed 30s)
+
+Order => setuju
+
+Thank you for trusting and shopping with Clovertees 😊😊👍
+    </div>
+
+    <button type="submit">Kirim Pesanan</button>
+  </form>
+  <script src="../js/script.js"></script>
+</body>
+</html>
