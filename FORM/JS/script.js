@@ -108,7 +108,7 @@ window.onload = tambahWarna;
 document.getElementById("formPemesanan").addEventListener("submit", function(e) {
   e.preventDefault();
 
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbzrejiDYPqEVkA0qgTpurh8k8mqt4VbFCuZehNXuc-uxtSHe5dvHtAczJpVN_o96WzwPg/exec';
+  const scriptURL = 'https://script.google.com/macros/library/d/1t36qJ_zhbRGeFq6QoumIo_PoHGSGGQ9hXbW1rdQSGxMhTYUiT1G8WW0c/1';
   const form = document.getElementById("formPemesanan");
   const formData = new FormData(form);
 
