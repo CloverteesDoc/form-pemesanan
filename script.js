@@ -108,16 +108,25 @@ window.onload = tambahWarna;
 document.getElementById("formPemesanan").addEventListener("submit", function(e) {
   e.preventDefault();
 
-  const scriptURL = 'https://script.google.com/macros/s/AKfycbzrejiDYPqEVkA0qgTpurh8k8mqt4VbFCuZehNXuc-uxtSHe5dvHtAczJpVN_o96WzwPg/exec';
-  const form = document.getElementById("formPemesanan");
-  const formData = new FormData(form);
+  const formData = {
+    nama: document.querySelector('[name="nama"]').value,
+    telepon: document.querySelector('[name="telepon"]').value,
+    instagram: document.querySelector('[name="instagram"]').value,
+    alamat: document.querySelector('[name="alamat"]').value
+  };
 
-  fetch(scriptURL, { method: 'POST', body: formData })
-    .then(response => {
+  fetch("https://script.google.com/macros/s/AKfycby_64OHzkY10EM_7zCMRX_cTHCFlodRiDyYxPGObEU5/dev", {
+    method: "POST",
+    body: JSON.stringify(formData),
+    headers: {
+      "Content-Type": "application/json"
+    }
+  }).then(res => {
+    if (res.ok) {
       alert("Pesanan berhasil dikirim!");
-      form.reset();
-    })
-    .catch(error => {
-      alert("Terjadi kesalahan saat mengirim: " + error.message);
-    });
+      document.getElementById("formPemesanan").reset();
+    } else {
+      alert("Gagal mengirim pesanan.");
+    }
+  });
 });
