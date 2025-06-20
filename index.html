@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Form Pemesanan Clovertees</title>
+  <style>
+    :root {
+      --primary: #4CAF50;
+      --primary-hover: #38883c;
+      --secondary: #f44336;
+      --background: #b4ffc1;
+      --card-bg: #ffffff;
+      --text: #333333;
+      --border: #e0e0e0;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Roboto', Arial, sans-serif;
+      background-color: var(--background);
+      color: var(--text);
+      line-height: 1.6;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    form {
+      background-color: var(--card-bg);
+      padding: 30px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 900px;
+      box-shadow: var(--shadow);
+      margin: 20px 0;
+    }
+
+    h2 {
+      text-align: center;
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-size: 28px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    input, textarea, select, button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 16px;
+      transition: border 0.3s;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    button {
+      background-color: var(--primary);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      border: none;
+      transition: all 0.3s;
+    }
+
+    button:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+    }
+
+    .warna-section {
+      position: relative;
+      padding: 25px;
+      margin-top: 30px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: #f9f9f9;
+      position: relative;
+    }
+
+    .delete-btn {
+      overflow-x: auto;
+      position: relative;
+      width: 100%;
+      top: -8px;
+      right: 0px;
+      background-color: var(--secondary);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 5px 5px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 15px 0;
+      background: white;
+    }
+
+    th, td {
+      border: 1px solid var(--border);
+      padding: 10px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #f1f1f1;
+      font-weight: 600;
+    }
+
+    input[type="number"] {
+      width: 70px;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .total-section {
+      margin-top: 20px;
+      padding: 15px;
+      background-color: #e8f5e9;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+
+    .note {
+      background-color: #fff8e1;
+      padding: 15px;
+      margin: 20px 0;
+      border-left: 4px solid #ffc107;
+      border-radius: 5px;
+    }
+
+    .loading {
+      display: none;
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .spinner {
+      border: 4px solid rgba(0, 0, 0, 0.1);
+      border-left-color: var(--primary);
+      border-radius: 50%;
+      width: 30px;
+      height: 30px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 10px;
+    }
+
+    .file-upload-container {
+      margin-top: 15px;
+      border: 1px dashed #ccc;
+      padding: 15px;
+      border-radius: 5px;
+      background: #f9f9f9;
+    }
+    
+    .file-list {
+      margin-top: 10px;
+    }
+    
+    .file-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      background: white;
+      border: 1px solid #eee;
+      margin-bottom: 5px;
+      border-radius: 4px;
+    }
+    
+    .file-item button {
+      width: auto;
+      padding: 3px 8px;
+      margin: 0;
+      background: #ff4444;
+      font-size: 12px;
+    }
+    
+    .add-file-btn {
+      background: #4CAF50;
+      width: auto;
+      padding: 8px 15px;
+      margin-top: 10px;
+    }
+
+    .warna-section h4:first-of-type {
+    margin-top: 5px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      form {
+        padding: 15px;
+      }
+
+      table {
+        font-size: 14px;
+      }
+
+      input, textarea, select, button {
+        padding: 10px;
+      }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+      /* Container file upload */
+    .file-upload-container {
+        margin-top: 15px;
+        border: 2px dashed #ccc;
+        padding: 15px;
+        border-radius: 8px;
+        background: #f8f9fa;
+    }
+
+        /* Tombol tambah file */
+    .add-file-btn {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+        /* Daftar file */
+    .file-list {
+        margin-top: 10px;
+    }
+
+    .file-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        background: white;
+        border: 1px solid #e0e0e0;
+        margin-bottom: 8px;
+        border-radius: 4px;
+    }
+
+        /* Tombol hapus file */
+    .delete-file-btn {
+        background: #ff4444;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        cursor: pointer;
+        font-size: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }    
+    }
+  </style>
+</head>
+<body>
+  <form id="formPemesanan">
+    <h2>📝 Form Pemesanan Clovertees</h2>
+
+    <label for="nama">Nama Lengkap:</label>
+    <input type="text" id="nama" name="nama" required placeholder="Nama kamu">
+
+    <label for="telepon">No. WhatsApp:</label>
+    <input type="tel" id="telepon" name="telepon" required placeholder="Contoh: 08123456789" pattern="[0-9]{10,13}">
+
+    <label for="instagram">Instagram:</label>
+    <input type="text" id="instagram" name="instagram" placeholder="Opsional (isi jika ada)"> <!-- sudah tidak required -->
+
+    <label for="alamat">Alamat Lengkap:</label>
+    <textarea id="alamat" name="alamat" required placeholder="Wajib diisi / Ambil Di Tempat"></textarea>
+
+    
+    <!-- Warna & Ukuran -->
+    <div id="warnaContainer"></div>
+
+    <!-- Tombol Tambah Warna -->
+    <button type="button" onclick="tambahWarna()">➕ Tambah Warna Lain</button>
+
+    <!-- Total -->
+    <div class="total-section" id="totalDisplay">Total Pesanan: 0 pcs</div>
+    <div class="total-section" id="rincianHarga">Total Harga: Rp0</div>
+
+    <!-- Catatan -->
+    <div class="note">
+      <strong>📌 Perhatian!</strong><br><br>
+      1. Setelah submit, warna & ukuran <strong>tidak bisa diubah</strong>.<br>
+      2. Konfirmasi setelah transfer.<br>
+      3. Proses pembuatan: 4-7 hari setelah approve desain.<br>
+      4. Warna bisa berbeda sedikit tergantung bahan (cotton combed 24s/30s).<br><br>
+      <em>Order = Setuju dengan syarat di atas.</em>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" id="loadingMessage">
+    <div class="spinner"></div>
+    <p>Mengirim pesanan...</p>
+    </div>
+
+    <!-- Tombol Submit -->
+    <button type="submit">🚀 Kirim Pesanan</button>
+</form>
+
+
+  <script>
+    // Daftar Harga
+    const hargaPerPcs = [
+      { min: 72, harga: 88000 },
+      { min: 36, harga: 94000 },
+      { min: 12, harga: 99000 },
+      { min: 3, harga: 104000 },
+      { min: 2, harga: 110000 },
+      { min: 1, harga: 138000 }
+    ];
+
+    // Tambahan harga ukuran besar
+    const tambahanUkuran = {
+      "2XL": 8000,
+      "3XL": 13000
+    };
+
+    // Daftar Warna Tersedia
+    let warnaIndex = 0;
+    const warnaList = [
+      "BLACK", "WHITE", "SOFT PINK", "NEON PINK", "RED", "MAROON", "LILAC", 
+      "SKY BLUE", "ROYAL BLUE", "NAVY BLUE", "NEON YELLOW", "TOSCA", 
+      "GREEN", "FOREST GREEN", "YELLOW", "ORANGE", "MUSTARD"
+    ];
+
+    // Format Rupiah
+    function formatRupiah(angka) {
+      return new Intl.NumberFormat('id-ID', { 
+        style: 'currency', 
+        currency: 'IDR',
+        maximumFractionDigits: 0
+      }).format(angka);
+    }
+
+    // Hitung Total Harga
+    function hitungHargaTotal() {
+    const sections = document.querySelectorAll('.warna-section');
+    const hargaDiv = document.getElementById('rincianHarga');
+    let grandTotal = 0;
+    let output = '';
+
+    sections.forEach((section, index) => {
+    const warna = section.querySelector('select').value;
+    const dewasaInputs = section.querySelectorAll('input[name^="dewasa_"]');
+    const anakInputs = section.querySelectorAll('input[name^="anak_"]');
+
+    let totalQty = 0;
+    let totalTambahan = 0;
+    
+    // Hitung untuk dewasa
+    let dewasaDetail = [];
+    dewasaInputs.forEach(input => {
+      const qty = parseInt(input.value) || 0;
+      if (qty > 0) {
+        const size = input.name.split('_')[2];
+        dewasaDetail.push(`${size} (${qty})`);
+        totalQty += qty;
+        if (tambahanUkuran[size]) {
+          totalTambahan += tambahanUkuran[size] * qty;
+        }
+      }
+    });
+
+    // Hitung untuk anak
+    let anakDetail = [];
+    anakInputs.forEach(input => {
+      const qty = parseInt(input.value) || 0;
+      if (qty > 0) {
+        const size = input.name.split('_')[2];
+        anakDetail.push(`${size} (${qty})`);
+        totalQty += qty;
+      }
+    });
+
+    if (totalQty === 0) return;
+
+    const harga = hargaPerPcs.find(h => totalQty >= h.min)?.harga || 138000;
+    const subTotal = harga * totalQty;
+    const total = subTotal + totalTambahan;
+    grandTotal += total;
+
+    output += `
+      <div style="margin-bottom: 1em">
+        <div><strong>${warna}</strong></div>
+        ${dewasaDetail.length > 0 ? `<div>Dewasa: ${dewasaDetail.join(', ')}</div>` : ''}
+        ${anakDetail.length > 0 ? `<div>Anak-anak: ${anakDetail.join(', ')}</div>` : ''}
+        <div>${formatRupiah(harga)} × ${totalQty} = ${formatRupiah(subTotal)}</div>
+        ${totalTambahan > 0 ? `<div>Tambahan ukuran: ${formatRupiah(totalTambahan)}</div>` : ''}
+        <div class="total-satuan">Subtotal: ${formatRupiah(total)}</div>
+      </div>
+      <hr style="border-top: 1px dashed #ccc; margin: 10px 0;">
+    `;
+  });
+
+  output += `<div class="total-akhir">TOTAL SEMUA: ${formatRupiah(grandTotal)}</div>`;
+  hargaDiv.innerHTML = output;
+}
+
+    // Tambah Form Warna Baru
+    function tambahWarna() {
+      warnaIndex++;
+      const container = document.getElementById('warnaContainer');
+      const section = document.createElement('div');
+      section.className = 'warna-section';
+      section.id = `warna-${warnaIndex}`;
+
+      section.innerHTML = `
+    <div class="header-warna">
+      <label>Warna Kaos #${warnaIndex}</label>
+      <button type="button" class="delete-btn" onclick="hapusWarna('warna-${warnaIndex}')">
+        ✕ Hapus Warna
+      </button>
+    </div>
+
+    <select name="warna${warnaIndex}" onchange="updateTotal()" required>
+      <option value="">-- Pilih Warna --</option>
+      ${warnaList.map(warna => `<option value="${warna}">${warna}</option>`).join('')}
+    </select>
+
+    <div class="table-container">
+      <h4>Ukuran Dewasa</h4>
+      <table>
+        <tr>
+          <th>XS</th><th>S</th><th>M</th><th>L</th><th>XL</th><th>2XL</th><th>3XL</th>
+        </tr>
+        <tr>
+          ${['XS', 'S', 'M', 'L', 'XL', '2XL', '3XL'].map(ukuran => `
+            <td><input type="number" name="dewasa_${warnaIndex}_${ukuran}" 
+                   min="0" value="0" oninput="updateTotal()"></td>
+          `).join('')}
+        </tr>
+      </table>
+    </div>
+
+    <div class="table-container">
+      <h4>Ukuran Anak</h4>
+      <table>
+        <tr>
+          <th>XS</th><th>S</th><th>M</th><th>L</th><th>XL</th>
+        </tr>
+        <tr>
+          ${['XS', 'S', 'M', 'L', 'XL'].map(ukuran => `
+            <td><input type="number" name="anak_${warnaIndex}_${ukuran}" 
+                   min="0" value="0" oninput="updateTotal()"></td>
+          `).join('')}
+        </tr>
+      </table>
+    </div>
+
+    <div class="desain-section">
+      <h4>🎨 Perincian Desain</h4>
+  
+      <label>Desain Depan</label>
+        <textarea name="desain_depan[]" id="desain_depan" placeholder="Contoh: Logo depan ukuran 10x10cm, warna merah"></textarea>
+          
+      <label>Desain Belakang</label>
+        <textarea name="desain_belakang[]" id="desain_belakang" placeholder="Contoh: Tulisan 'Clovertees' dengan font Arial"></textarea>
+          
+      <label>Desain Lengan (jika ada)</label>
+        <textarea name="desain_lengan[]" id="desain_lengan" placeholder="Contoh: Strip horizontal 2cm dari ujung lengan"></textarea>
+     </div>
+
+    <div class="file-upload-container">
+      <h4>Upload Desain</h4>
+      <input type="file" name="file_desain_${warnaIndex}[]" multiple 
+             accept="image/*,.pdf,.ai,.psd" style="display:none;">
+      <button type="button" class="add-file-btn" 
+              onclick="this.previousElementSibling.click()">
+        + Tambah File
+      </button>
+      <div class="file-list"></div>
+      <small>Format: JPG, PNG, PDF, AI, PSD (max 5MB/file)</small>
+    </div>
+  `;
+
+  container.appendChild(section);
+  setupFileUpload(section.id); // Aktifkan fungsi upload
+  updateTotal();
+}
+  
+    // Hapus Warna
+    function hapusWarna(id) {
+      if (confirm('Yakin ingin menghapus warna ini?')) {
+        document.getElementById(id).remove();
+        updateTotal();
+      }
+    }
+
+    // Update Total Pesanan
+    function updateTotal() {
+    const sections = document.querySelectorAll('.warna-section');
+    let totalPcs = 0;
+    let detailPesanan = '';
+
+    sections.forEach((section, idx) => {
+    const warna = section.querySelector('select').value;
+    const dewasaInputs = section.querySelectorAll('input[name^="dewasa_"]');
+    const anakInputs = section.querySelectorAll('input[name^="anak_"]');
+    
+    let totalWarna = 0;
+    let detailDewasa = [];
+    let detailAnak = [];
+
+    // Hitung item dewasa
+    dewasaInputs.forEach(input => {
+      const qty = parseInt(input.value) || 0;
+      if (qty > 0) {
+        const size = input.name.split('_')[2];
+        totalWarna += qty;
+        detailDewasa.push(`${size} ${qty}`);
+      }
+    });
+
+    // Hitung item anak
+    anakInputs.forEach(input => {
+      const qty = parseInt(input.value) || 0;
+      if (qty > 0) {
+        const size = input.name.split('_')[2];
+        totalWarna += qty;
+        detailAnak.push(`${size} ${qty}`);
+      }
+    });
+
+    if (warna && totalWarna > 0) {
+      totalPcs += totalWarna;
+      detailPesanan += `${idx + 1}. ${warna}: ${totalWarna} pcs\n`;
+      
+      if (detailDewasa.length > 0) {
+        detailPesanan += `   Dewasa: ${detailDewasa.join(', ')}\n`;
+      }
+      
+      if (detailAnak.length > 0) {
+        detailPesanan += `   Anak-anak: ${detailAnak.join(', ')}\n`;
+      }
+      
+      detailPesanan += '\n'; // Spasi antar warna
+    }
+  });
+
+  document.getElementById('totalDisplay').innerHTML = `
+    <strong>Total Pesanan: ${totalPcs} pcs</strong>
+    <pre style="margin-top:10px">${detailPesanan}</pre>
+  `;
+  hitungHargaTotal();
+}
+
+    // ========== PENANGANAN PENGIRIMAN FORM YANG DIPERBAIKI ==========
+    document.getElementById('formPemesanan').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // Validasi nomor WhatsApp
+      const waNumber = e.target.telepon.value;
+      if (!/^[0-9]{10,13}$/.test(waNumber)) {
+        alert('Nomor WhatsApp harus 10-13 digit angka!');
+        return;
+      }
+
+      // Validasi minimal 1 item dipesan
+      const totalPcs = document.getElementById('totalDisplay').textContent.match(/\d+/)[0] || 0;
+      if (totalPcs == 0) {
+        alert('Anda belum memilih jumlah pesanan!');
+        return;
+      }
+
+      // Tampilkan status loading
+      document.getElementById('loadingMessage').style.display = 'block';
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+
+      try {
+        // Siapkan data form
+        const formData = new FormData(e.target);
+        formData.append('timestamp', new Date().toISOString());
+        formData.append('totalQty', totalPcs);
+        formData.append('detailPesanan', generateDetailPesanan());
+        formData.append('totalHarga', document.getElementById('rincianHarga').textContent.split('TOTAL SEMUA: ')[1]);
+
+        // Ganti dengan URL Google Apps Script Anda yang sebenarnya
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxJgGDNOvsQr9DBGdSQmWSBLX3E80CixnT-Ux-2_PWxxq3kz6MrsyfaXZqqxjd5xVkt6w/exec";
+        
+        for (let pair of formData.entries()) {
+        console.log(`${pair[0]}: ${pair[1]}`);
+        }
+        const response = await fetch(scriptURL, {
+          method: 'POST',
+          body: formData,
+          redirect: 'follow'
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error HTTP! status: ${response.status}`);
+        }
+
+        const result = await response.json();
+        console.log("Full response:", result); 
+        
+        if (result.status === "success") {
+          alert(`✅ Nomor Pesanan #${result.nomorPesanan} berhasil! Kami akan menghubungi Anda via WhatsApp.`);
+          e.target.reset();
+          document.getElementById('warnaContainer').innerHTML = '';
+          warnaIndex = 0;
+          tambahWarna();
+        } else {
+          throw new Error(result.message || "Error tidak diketahui dari server");
+        }
+      } catch (error) {
+        console.error('Error pengiriman:', error);
+        alert(`❌ Gagal mengirim pesanan: ${error.message}`);
+      } finally {
+        document.getElementById('loadingMessage').style.display = 'none';
+        submitBtn.disabled = false;
+      }
+    });
+
+    // Generator detail yang diperbaiki
+    function generateDetailPesanan() {
+      const sections = document.querySelectorAll('.warna-section');
+      let output = "";
+      
+      sections.forEach((section, idx) => {
+        const warna = section.querySelector('select').value;
+        const inputs = section.querySelectorAll('input[type="number"]');
+        
+        let dewasa = [], anak = [];
+        
+        inputs.forEach(input => {
+          const qty = parseInt(input.value) || 0;
+          if (qty > 0) {
+            const size = input.name.split('_')[2];
+            if (input.name.includes('dewasa')) {
+              dewasa.push(`${size} (${qty})`);
+            } else {
+              anak.push(`${size} (${qty})`);
+            }
+          }
+        });
+        
+        if (warna && (dewasa.length > 0 || anak.length > 0)) {
+          output += `${idx + 1}. ${warna}:\n`;
+          if (dewasa.length) output += `   Dewasa: ${dewasa.join(', ')}\n`;
+          if (anak.length) output += `   Anak: ${anak.join(', ')}\n\n`;
+        }
+      });
+      
+      return output.trim();
+    }
+
+    function setupFileUpload(sectionId) {
+  const section = document.getElementById(sectionId);
+  const fileInput = section.querySelector('input[type="file"]');
+  const fileList = section.querySelector('.file-list');
+  const maxFiles = 5; // Batas maksimal file
+
+  fileInput.addEventListener('change', function(e) {
+    const files = e.target.files;
+    
+    // Cek jumlah file
+    if (fileList.children.length + files.length > maxFiles) {
+      alert(`Maksimal ${maxFiles} file per warna`);
+      return;
+    }
+
+    // Tambahkan file ke daftar
+    Array.from(files).forEach(file => {
+      // Validasi ukuran file (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert(`File ${file.name} terlalu besar (max 5MB)`);
+        return;
+      }
+
+      const fileItem = document.createElement('div');
+      fileItem.className = 'file-item';
+      fileItem.dataset.fileName = file.name;
+      fileItem.innerHTML = `
+        <span>${file.name} (${(file.size/1024/1024).toFixed(2)}MB)</span>
+        <button type="button" class="delete-file-btn">✕</button>
+      `;
+      fileList.appendChild(fileItem);
+    });
+
+    // Reset input untuk mengizinkan upload file yang sama lagi
+    fileInput.value = '';
+  });
+
+  // Handle klik tombol hapus file
+  fileList.addEventListener('click', function(e) {
+    if (e.target.classList.contains('delete-file-btn')) {
+      e.target.closest('.file-item').remove();
+    }
+  });
+}
+
+    // Tambah warna pertama saat halaman dimuat
+    window.onload = tambahWarna;
+  </script>
+</body>
+</html>
