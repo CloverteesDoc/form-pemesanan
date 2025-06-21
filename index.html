@@ -374,26 +374,25 @@
 
     // Hitung Total Harga
     function hitungHargaTotal() {
-    const sections = document.querySelectorAll('.warna-section');
-    const hargaDiv = document.getElementById('rincianHarga');
-    let grandTotal = 0;
-    let output = '';
+  const sections = document.querySelectorAll('.warna-section');
+  const hargaDiv = document.getElementById('rincianHarga');
 
-    sections.forEach((section, index) => {
-    const warna = section.querySelector('select').value;
+  let totalQty = 0;
+  let totalTambahan = 0;
+  let ukuranDetail = {
+    dewasa: {},
+    anak: {}
+  };
+
+  sections.forEach(section => {
     const dewasaInputs = section.querySelectorAll('input[name^="dewasa_"]');
     const anakInputs = section.querySelectorAll('input[name^="anak_"]');
 
-    let totalQty = 0;
-    let totalTambahan = 0;
-    
-    // Hitung untuk dewasa
-    let dewasaDetail = [];
     dewasaInputs.forEach(input => {
       const qty = parseInt(input.value) || 0;
       if (qty > 0) {
         const size = input.name.split('_')[2];
-        dewasaDetail.push(`${size} (${qty})`);
+        ukuranDetail.dewasa[size] = (ukuranDetail.dewasa[size] || 0) + qty;
         totalQty += qty;
         if (tambahanUkuran[size]) {
           totalTambahan += tambahanUkuran[size] * qty;
@@ -401,39 +400,35 @@
       }
     });
 
-    // Hitung untuk anak
-    let anakDetail = [];
     anakInputs.forEach(input => {
       const qty = parseInt(input.value) || 0;
       if (qty > 0) {
         const size = input.name.split('_')[2];
-        anakDetail.push(`${size} (${qty})`);
+        ukuranDetail.anak[size] = (ukuranDetail.anak[size] || 0) + qty;
         totalQty += qty;
+        // Tidak ada tambahan untuk anak
       }
     });
-
-    if (totalQty === 0) return;
-
-    const harga = hargaPerPcs.find(h => totalQty >= h.min)?.harga || 138000;
-    const subTotal = harga * totalQty;
-    const total = subTotal + totalTambahan;
-    grandTotal += total;
-
-    output += `
-      <div style="margin-bottom: 1em">
-        <div><strong>${warna}</strong></div>
-        ${dewasaDetail.length > 0 ? `<div>Dewasa: ${dewasaDetail.join(', ')}</div>` : ''}
-        ${anakDetail.length > 0 ? `<div>Anak-anak: ${anakDetail.join(', ')}</div>` : ''}
-        <div>${formatRupiah(harga)} × ${totalQty} = ${formatRupiah(subTotal)}</div>
-        ${totalTambahan > 0 ? `<div>Tambahan ukuran: ${formatRupiah(totalTambahan)}</div>` : ''}
-        <div class="total-satuan">Subtotal: ${formatRupiah(total)}</div>
-      </div>
-      <hr style="border-top: 1px dashed #ccc; margin: 10px 0;">
-    `;
   });
 
-  output += `<div class="total-akhir">TOTAL SEMUA: ${formatRupiah(grandTotal)}</div>`;
-  hargaDiv.innerHTML = output;
+  const hargaPerItem = hargaPerPcs.find(h => totalQty >= h.min)?.harga || 138000;
+  const subTotal = hargaPerItem * totalQty;
+  const grandTotal = subTotal + totalTambahan;
+
+  let detailUkuran = '';
+    if (Object.keys(ukuranDetail.dewasa).length > 0) {
+    detailUkuran += `Dewasa: ${Object.entries(ukuranDetail.dewasa).map(([s, q]) => `${s} (${q})`).join(', ')}<br>`;
+  }
+    if (Object.keys(ukuranDetail.anak).length > 0) {
+    detailUkuran += `Anak-anak: ${Object.entries(ukuranDetail.anak).map(([s, q]) => `${s} (${q})`).join(', ')}<br>`;
+  }
+      
+  hargaDiv.innerHTML = `
+    <div>${detailUkuran}</div>
+    <div>Total Harga: ${formatRupiah(hargaPerItem)} × ${totalQty} = ${formatRupiah(subTotal)}</div>
+    ${totalTambahan > 0 ? `<div>Tambahan Ukuran Besar: ${formatRupiah(totalTambahan)}</div>` : ''}
+    <div style="font-size: 1.5em; font-weight: bold; margin-top: 10px;">TOTAL SEMUA: ${formatRupiah(grandTotal)}</div>
+  `;
 }
 
     // Tambah Form Warna Baru
